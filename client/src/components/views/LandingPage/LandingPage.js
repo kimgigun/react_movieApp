@@ -2,7 +2,7 @@ import React,{useEffect, useState} from 'react'
 import { FaCode } from "react-icons/fa";
 import {API_URL, API_KEY, IMAGE_BASE_URL} from "../../Config";
 import MainImage from './Sections/MainImage';
-import GridCards from '../Commons/GirdCard';
+import GridCards from '../Commons/GridCard';
 import {Row} from 'antd';
 
 
@@ -57,6 +57,7 @@ function LandingPage() {
                                         `${IMAGE_BASE_URL}w400${movie.poster_path}` : null}
                                     movieId={movie.id}
                                     movieName={movie.original_title}
+                                    landingPage={true}
                                 />
                             </React.Fragment>
                         ))}

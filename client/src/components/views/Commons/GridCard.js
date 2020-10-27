@@ -1,7 +1,8 @@
 import React from 'react';
 import {Col} from 'antd';
 
-function GirdCards(props) {
+function GridCard(props) {
+
     if(props.landingPage){
         return (
             <Col lg={6} md={8} xs={24}>
@@ -17,7 +18,7 @@ function GirdCards(props) {
         return (
             <Col lg={6} md={8} xs={24}>
                 <div>
-                    <img style={{width:'100%', height:'320px'}} src={props.image} alt={props.charactorName}/>
+                    <img style={{width:'100%'}} src={props.image} alt={props.charactorName}/>
                 </div>
                 
             </Col>
@@ -25,4 +26,4 @@ function GirdCards(props) {
     }
 }
 
-export default GirdCards
+export default GridCard

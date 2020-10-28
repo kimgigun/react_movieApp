@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import React, { useEffect, useState} from 'react';
 import './favorite.css';
+import {Button, Popover} from 'antd';
 
 function FavoritePage(props) {
 
@@ -22,9 +23,8 @@ function FavoritePage(props) {
     },[]);
 
     return (
-        <div>
-            <div>favorite 페이지</div>
-            <div style={{width:'85%', margin:'3rem, auto'}}>
+        <div style={{display:'flex', justifyContent:'center'}}>
+            <div style={{width:'85%', margin:'3rem auto'}}>
                 <h2>Favorite Movies</h2>
                 <hr/>
                 <table>
@@ -32,18 +32,18 @@ function FavoritePage(props) {
                         <tr>
                             <th>Movie Title</th>
                             <th>Movie Runtime</th>
-                            <th>remove from favorites</th>
+                            <th>Remove From Favorites</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {MovieList && MovieList.map((item, index) =>(
+                        {MovieList && MovieList.map((item, index) =>(
                             <tr key={index}>
-                                <td>{item}</td>
-                                <td></td>
-                                <td></td>
+                                <td>{item.movieTitle}</td>
+                                <td>{item.movieRunTime} min</td>
+                                <td><Button>remove</Button></td>
                             </tr>    
-                            )
-                        )} */}
+                            ))
+                        }
                         
                     </tbody>
                 </table>

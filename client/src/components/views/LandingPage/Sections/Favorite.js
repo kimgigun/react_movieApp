@@ -6,7 +6,7 @@ function Favorite(props) {
 
     const movieId = props.movieId;
     const userFrom = localStorage.getItem('userId');
-    const movieTitle = props.movieInfo.movieTitle;
+    const movieTitle = props.movieTitle;
     const moviePost = props.movieInfo.backdrop_path;
     const movieRunTime = props.movieInfo.runtime;
     const [FavoriteNumber, setFavoriteNumber] = useState(0);

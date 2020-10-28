@@ -2,15 +2,17 @@ import Axios from 'axios';
 import React, { useEffect, useState} from 'react';
 import './favorite.css';
 
-function FavoritePage() {
+function FavoritePage(props) {
 
     const [MovieList, setMovieList] = useState([]);
 
+
     useEffect(()=>{
 
-        Axios.get('api/favorite/getFavoriteList',{userFrom: localStorage.getItem('userId')})
+        Axios.post('api/favorite/getFavoriteList',{userFrom: localStorage.getItem('userId')})
         .then(response => {
             if(response.data.success){
+                console.log('data');
                 console.log(response.data);
                 setMovieList(response.data.list);
             }else{
@@ -18,6 +20,7 @@ function FavoritePage() {
             }
         })
     },[]);
+
     return (
         <div>
             <div>favorite 페이지</div>

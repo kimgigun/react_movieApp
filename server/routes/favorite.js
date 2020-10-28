@@ -31,7 +31,7 @@ router.post("/favorited", (req, res) => {
 });
 
 router.post("/addToFavorite", (req, res) => {
-
+    console.log(req.body.userFrom);
     const favorite = new Favorite(req.body);
 
     favorite.save((err, doc) => {
@@ -53,11 +53,14 @@ router.post("/removeToFavorite", (req, res) => {
 
 });
 
-router.get("/getFavoriteList", (req, res) =>{
+router.post("/getFavoriteList", (req, res) =>{
+   
 
     Favorite.find({'userFrom':req.body.userFrom})
     .exec((err, list)=>{
         if(err) return res.status(400).send(err)
+        console.log('list');
+        console.log(list);
         return res.status(200).json({success:true, list:list})
     })
 })

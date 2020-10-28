@@ -5,7 +5,7 @@ import {Button} from 'antd';
 function Favorite(props) {
 
     const movieId = props.movieId;
-    const userFrom = props.userFrom;
+    const userFrom = localStorage.getItem('userId');
     const movieTitle = props.movieInfo.movieTitle;
     const moviePost = props.movieInfo.backdrop_path;
     const movieRunTime = props.movieInfo.runtime;
@@ -34,14 +34,14 @@ function Favorite(props) {
         Axios.post('/api/favorite/favorited', variable)
         .then(response =>{
             if(response.data.success){
-                setFavorited(response.data.favorited ? true : false)
+                setFavorited(response.data.favorited > 0? true : false)
             }else{
                 alert('favorited 정보를 가져오는데 실패 했습니다.');
             }
         })
 
 
-    },[Favorited]);
+    },[]);
 
     const changeToFavorite = () => { 
 
@@ -50,7 +50,9 @@ function Favorite(props) {
             Axios.post('/api/favorite/removeToFavorite', variable)
             .then(response =>{
                 if(response){
+                    console.log('삭제성공');
                     setFavorited(!Favorited);
+                    setFavoriteNumber(FavoriteNumber-1);
                 }else{
                     alert('favorite 삭제 실패');    
                 }
@@ -61,7 +63,9 @@ function Favorite(props) {
             Axios.post('/api/favorite/addToFavorite', variable)
             .then(response =>{
                 if(response.data.success){
+                    console.log('추가성공');
                     setFavorited(!Favorited);
+                    setFavoriteNumber(FavoriteNumber+1);
                 }else{
                     alert('favorite 추가 실패');
                 }

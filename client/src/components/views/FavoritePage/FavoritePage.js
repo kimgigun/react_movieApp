@@ -2,6 +2,9 @@ import Axios from 'axios';
 import React, { useEffect, useState} from 'react';
 import './favorite.css';
 import {Button, Popover} from 'antd';
+import Favorite from '../LandingPage/Sections/Favorite';
+import {IMAGE_BASE_URL} from '../../Config'
+import { removeFileItem } from 'antd/lib/upload/utils';
 
 function FavoritePage(props) {
 
@@ -9,6 +12,10 @@ function FavoritePage(props) {
 
 
     useEffect(()=>{
+        getMovieList() 
+    },[]);
+
+    const getMovieList = ()=>{
 
         Axios.post('api/favorite/getFavoriteList',{userFrom: localStorage.getItem('userId')})
         .then(response => {
@@ -20,7 +27,38 @@ function FavoritePage(props) {
                 alert('favorite 리스트 가져오기 실패')
             }
         })
-    },[]);
+    }
+
+    const removeMovie = (movieId, userFrom)=>{
+        Axios.post('api/favorite/removeToFavorite',{movieId: movieId, userFrom:userFrom})
+        .then(response => {
+            if(response.data.success){
+                console.log('data');
+                console.log(response.data);
+                getMovieList(); 
+            }else{
+                alert('Favorite Movie 삭제 실패')
+            }
+        })
+     }
+
+    const rendCard = MovieList && MovieList.map((item, index) =>{ 
+
+        const content = 
+            <div>
+                {item.moviePost ? 
+                <img src={`${IMAGE_BASE_URL}w500${item.moviePost}`}></img> : "no image"}
+            </div>
+     
+        return   <tr key={index}>
+            <Popover content={content} title={item.movieTitle}>
+                <td>{item.movieTitle}</td>
+            </Popover>
+            <td>{item.movieRunTime} min</td>
+            <td><Button onClick={()=>removeMovie(item.movieId, item.userFrom)}>remove</Button></td>
+        </tr>    
+     }
+    )
 
     return (
         <div style={{display:'flex', justifyContent:'center'}}>
@@ -36,15 +74,7 @@ function FavoritePage(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        {MovieList && MovieList.map((item, index) =>(
-                            <tr key={index}>
-                                <td>{item.movieTitle}</td>
-                                <td>{item.movieRunTime} min</td>
-                                <td><Button>remove</Button></td>
-                            </tr>    
-                            ))
-                        }
-                        
+                        {rendCard}
                     </tbody>
                 </table>
             </div>
